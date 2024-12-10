@@ -1,4 +1,4 @@
-package org.ablonewolf;
+package org.ablonewolf.sampleCode;
 
 
 public class Main {
