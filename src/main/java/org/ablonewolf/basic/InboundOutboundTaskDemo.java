@@ -1,4 +1,4 @@
-package org.ablonewolf.platformThreads;
+package org.ablonewolf.basic;
 
 public class InboundOutboundTaskDemo {
 
