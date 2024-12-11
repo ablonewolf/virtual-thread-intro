@@ -17,4 +17,11 @@ public class Task {
             logger.error("Task {} interrupted, details: {}", i, e.getMessage());
         }
     }
+
+    public static Long findFibonacci(Long number) {
+        if (number < 2) {
+            return number;
+        }
+        return findFibonacci(number - 1) + findFibonacci(number - 2);
+    }
 }
