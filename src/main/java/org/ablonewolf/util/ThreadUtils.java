@@ -5,7 +5,10 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
-public class ThreadUtils {
+public final class ThreadUtils {
+
+    private ThreadUtils() {
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(ThreadUtils.class);
 
