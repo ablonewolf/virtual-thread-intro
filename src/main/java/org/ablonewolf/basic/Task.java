@@ -1,6 +1,6 @@
 package org.ablonewolf.basic;
 
-import org.ablonewolf.commonUtils.ThreadUtils;
+import org.ablonewolf.util.ThreadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
