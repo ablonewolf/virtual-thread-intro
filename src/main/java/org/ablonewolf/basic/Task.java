@@ -1,5 +1,6 @@
 package org.ablonewolf.basic;
 
+import org.ablonewolf.commonUtils.ThreadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,13 +10,9 @@ public class Task {
     private static final Logger logger = LoggerFactory.getLogger(Task.class);
 
     public static void doBlockingTask(Integer i) {
-        try {
-            logger.info("Blocking task {} started", i);
-            Thread.sleep(Duration.ofSeconds(10));
-            logger.info("Blocking task {} finished", i);
-        } catch (InterruptedException e) {
-            logger.error("Task {} interrupted, details: {}", i, e.getMessage());
-        }
+        logger.info("Blocking task {} started", i);
+        ThreadUtils.sleep(Duration.ofSeconds(1));
+        logger.info("Blocking task {} finished", i);
     }
 
     public static Long findFibonacci(Long number) {
