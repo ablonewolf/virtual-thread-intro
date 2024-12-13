@@ -20,7 +20,7 @@ public final class ThreadUtils {
         }
     }
 
-    public static void executeIOTask(int taskNumber, Duration duration) {
+    public static void executeIOTask(int taskNumber, Duration duration, Logger logger) {
         var threadName = Thread.currentThread().getName();
         logger.info("Task {} started, thread name: {}", taskNumber, threadName);
         ThreadUtils.sleep(duration);
