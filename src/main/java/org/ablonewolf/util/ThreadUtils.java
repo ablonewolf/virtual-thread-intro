@@ -19,4 +19,11 @@ public final class ThreadUtils {
             logger.error("Thread sleep was interrupted, details: {}", e.getMessage());
         }
     }
+
+    public static void executeIOTask(int taskNumber, Duration duration) {
+        var threadName = Thread.currentThread().getName();
+        logger.info("Task {} started, thread name: {}", taskNumber, threadName);
+        ThreadUtils.sleep(duration);
+        logger.info("Task {} finished, thread name: {}", taskNumber, threadName);
+    }
 }
