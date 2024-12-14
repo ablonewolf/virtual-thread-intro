@@ -21,9 +21,9 @@ public final class ThreadUtils {
     }
 
     public static void executeIOTask(int taskNumber, Duration duration, Logger logger) {
-        var threadName = Thread.currentThread().getName();
-        logger.info("Task {} started, thread name: {}", taskNumber, threadName);
+        var threadInfo = Thread.currentThread();
+        logger.info("Task {} started, thread info: {}", taskNumber, threadInfo);
         ThreadUtils.sleep(duration);
-        logger.info("Task {} finished, thread name: {}", taskNumber, threadName);
+        logger.info("Task {} finished, thread info: {}", taskNumber, threadInfo);
     }
 }
