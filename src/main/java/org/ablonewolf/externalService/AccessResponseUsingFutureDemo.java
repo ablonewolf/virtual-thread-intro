@@ -19,10 +19,10 @@ public class AccessResponseUsingFutureDemo {
     void main() {
 
         ThreadFactory threadFactory = Thread.ofPlatform().name("Platform thread - ", 1).factory();
-        try (var executor = Executors.newThreadPerTaskExecutor(threadFactory)) {
+        try (var executor = Executors.newFixedThreadPool(25, threadFactory)) {
             // this will be blocking since we are using platform threads.
             var totalTime = CommonUtils.timer(() -> fetchProductFromAPI(executor));
-            logger.info("total time using cached threads: {}", totalTime);
+            logger.info("total time using platform threads: {}", totalTime);
             executor.shutdown();
         }
 
