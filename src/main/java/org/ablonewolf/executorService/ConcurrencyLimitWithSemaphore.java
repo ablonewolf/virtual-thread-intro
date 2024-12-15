@@ -15,12 +15,13 @@ public class ConcurrencyLimitWithSemaphore {
             .name("Virtual Thread - ", 1)
             .factory();
         try (var executorService = Executors.newThreadPerTaskExecutor(virtualThreadFactory)) {
-            CustomConcurrencyLimiter customConcurrencyLimiter = new CustomConcurrencyLimiter(executorService, 3);
+            CustomConcurrencyLimiter<String> customConcurrencyLimiter =
+                new CustomConcurrencyLimiter<>(executorService, 3);
             fetchProductThroughAPICall(customConcurrencyLimiter, 30);
         }
     }
 
-    private static void fetchProductThroughAPICall(CustomConcurrencyLimiter concurrencyLimiter, int taskCount) {
+    private static void fetchProductThroughAPICall(CustomConcurrencyLimiter<String> concurrencyLimiter, int taskCount) {
         try (concurrencyLimiter) {
             for (int i = 1; i <= taskCount; i++) {
                 final int productNumber = i;
