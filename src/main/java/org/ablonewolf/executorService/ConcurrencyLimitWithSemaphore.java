@@ -11,7 +11,9 @@ public class ConcurrencyLimitWithSemaphore {
     private static final Logger logger = LoggerFactory.getLogger(ConcurrencyLimitWithSemaphore.class);
 
     void main() {
-        var virtualThreadFactory = Thread.ofVirtual().name("Virtual Thread - ", 1).factory();
+        var virtualThreadFactory = Thread.ofVirtual()
+            .name("Virtual Thread - ", 1)
+            .factory();
         try (var executorService = Executors.newThreadPerTaskExecutor(virtualThreadFactory)) {
             CustomConcurrencyLimiter customConcurrencyLimiter = new CustomConcurrencyLimiter(executorService, 3);
             fetchProductThroughAPICall(customConcurrencyLimiter, 30);
@@ -26,7 +28,8 @@ public class ConcurrencyLimitWithSemaphore {
             }
             logger.info("submitted");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            logger.error("An error occurred while submitting the task to the concurrency limiter, details: {}",
+                e.getMessage());
         }
     }
 
