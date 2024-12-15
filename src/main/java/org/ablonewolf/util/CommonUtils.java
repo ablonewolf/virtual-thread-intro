@@ -1,5 +1,6 @@
 package org.ablonewolf.util;
 
+import org.ablonewolf.externalService.Client;
 import org.slf4j.Logger;
 
 import java.time.Duration;
@@ -25,5 +26,11 @@ public final class CommonUtils {
                 logger.info("Task {} submitted", taskNumber);
             }
         }
+    }
+
+    public static String printProductInfo(int productId, Logger logger) {
+        var product = Client.getProduct(productId);
+        logger.info("Product info for the id {}: {}", productId, product);
+        return product;
     }
 }

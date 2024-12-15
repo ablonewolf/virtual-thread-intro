@@ -1,6 +1,6 @@
 package org.ablonewolf.executorService;
 
-import org.ablonewolf.externalService.Client;
+import org.ablonewolf.util.CommonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,18 +25,12 @@ public class ConcurrencyLimitWithSemaphore {
         try (concurrencyLimiter) {
             for (int i = 1; i <= taskCount; i++) {
                 final int productNumber = i;
-                concurrencyLimiter.submit(() -> printProductInfo(productNumber));
+                concurrencyLimiter.submit(() -> CommonUtils.printProductInfo(productNumber, logger));
             }
             logger.info("submitted");
         } catch (Exception e) {
             logger.error("An error occurred while submitting the task to the concurrency limiter, details: {}",
                 e.getMessage());
         }
-    }
-
-    private static String printProductInfo(int productId) {
-        var product = Client.getProduct(productId);
-        logger.info("Product info for the id {}: {}", productId, product);
-        return product;
     }
 }
