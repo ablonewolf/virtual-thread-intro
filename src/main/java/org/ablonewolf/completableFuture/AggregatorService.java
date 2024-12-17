@@ -22,6 +22,7 @@ public class AggregatorService {
                 logger.error("An error occurred while fetching the product name, details: {}", ex.getMessage());
                 return null;
             });
+
         var ratingFuture = CompletableFuture
             .supplyAsync(() -> Client.getRatingForProduct(productId), executorService)
             .exceptionally(ex -> {
@@ -29,6 +30,7 @@ public class AggregatorService {
                     ex.getMessage());
                 return null;
             });
+
         return productFuture.thenCombine(ratingFuture, (product, rating) ->
                 new ProductDTO(productId, product, rating))
             .exceptionally(ex -> {
