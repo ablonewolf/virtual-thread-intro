@@ -20,6 +20,14 @@ public final class ThreadUtils {
         }
     }
 
+    public static void sleep(String taskName, Duration duration) {
+        try {
+            Thread.sleep(duration.toMillis());
+        } catch (InterruptedException e) {
+            logger.error("{} was interrupted, details: {}", taskName, e.getMessage());
+        }
+    }
+
     public static void executeIOTask(int taskNumber, Duration duration, Logger logger) {
         var threadInfo = Thread.currentThread();
         logger.info("Task {} started, thread info: {}", taskNumber, threadInfo);
