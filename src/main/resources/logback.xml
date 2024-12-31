@@ -2,10 +2,11 @@
 <configuration>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} %-5level [%t{default:-"Unnamed Thread"}] %cyan(%logger) : %m%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} %-5level [%t{default:-"Unnamed Thread"}] %highlight(%-5level){FATAL=red} %cyan(%logger) : %m%n</pattern>
         </encoder>
     </appender>
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
+
