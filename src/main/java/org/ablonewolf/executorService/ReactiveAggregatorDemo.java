@@ -1,6 +1,5 @@
 package org.ablonewolf.executorService;
 
-import org.ablonewolf.util.ThreadUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
@@ -16,11 +15,11 @@ import java.util.stream.IntStream;
 public class ReactiveAggregatorDemo {
 
     private static final Logger logger = LoggerFactory.getLogger(ReactiveAggregatorDemo.class);
-    private static final int BATCH_SIZE = 1000;
+    private static final int BATCH_SIZE = 500;
 
     void main() {
-        ThreadFactory virtualThreadFactory = Thread.ofPlatform().name("Platform Thread - ", 1).factory();
-        ExecutorService executorService = Executors.newThreadPerTaskExecutor(virtualThreadFactory);
+        ThreadFactory threadFactory = Thread.ofVirtual().factory();
+        ExecutorService executorService = Executors.newThreadPerTaskExecutor(threadFactory);
         Scheduler scheduler = Schedulers.fromExecutor(executorService);
 
         var startTime = System.currentTimeMillis();
@@ -28,15 +27,13 @@ public class ReactiveAggregatorDemo {
         try (executorService) {
             var productService = new ReactiveProductService();
 
-            for (int i = 0; i < 500000; i += BATCH_SIZE) {
-                int end = Math.min(i + BATCH_SIZE, 500000);
+            for (int i = 0; i < 55000; i += BATCH_SIZE) {
+                int end = Math.min(i + BATCH_SIZE, 55000);
 
                 // Submit tasks in batches
                 submitTasksInBatch(i, end, productService, scheduler);
+                Thread.sleep(Duration.ofMillis(350L));
             }
-
-            // Sleep for a while to let tasks complete
-            ThreadUtils.sleep(Duration.ofSeconds(5));
 
         } catch (Exception e) {
             logger.error("An error occurred: {}", e.getMessage());

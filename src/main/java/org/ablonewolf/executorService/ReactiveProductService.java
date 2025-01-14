@@ -19,15 +19,15 @@ public class ReactiveProductService {
                 return Mono.just("Unknown Product"); // Fallback value instead of null
             });
 
-        Mono<Integer> ratingMono = client.getRatingForProduct(productId)
+        Mono<String> ratingMono = client.getRatingForProduct(productId)
             .doOnError(ex -> logger.error("Error fetching rating for product ID {}: {}", productId, ex.getMessage()))
             .onErrorResume(ex -> {
                 logger.warn("Returning default rating for ID {} due to error {}", productId, ex.getMessage());
-                return Mono.just(0); // Fallback value instead of null
+                return Mono.just("0"); // Fallback value instead of null
             });
 
         return Mono.zip(productMono, ratingMono)
-            .map(tuple -> new ProductDTO(productId, tuple.getT1(), tuple.getT2()))
+            .map(tuple -> new ProductDTO(productId, tuple.getT1(), Integer.parseInt(tuple.getT2())))
             .doOnNext(productDTO -> logger.info("Constructed ProductDTO: {}", productDTO))
             .doOnError(ex -> logger.error("Error constructing ProductDTO for ID {}: {}", productId, ex.getMessage()))
             .onErrorResume(ex -> {
