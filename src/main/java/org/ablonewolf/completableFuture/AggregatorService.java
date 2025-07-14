@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 
 @RequiredArgsConstructor
@@ -14,6 +15,11 @@ public class AggregatorService {
 
     private static final Logger logger = LoggerFactory.getLogger(AggregatorService.class);
     private final ExecutorService executorService;
+
+    private static ProductDTO logErrorMessage(Throwable ex) {
+        logger.error("An error occurred, details: {}", ex.getMessage());
+        return null;
+    }
 
     public CompletableFuture<ProductDTO> getProductInfo(int productId) {
         var productFuture = CompletableFuture.
@@ -33,9 +39,17 @@ public class AggregatorService {
 
         return productFuture.thenCombine(ratingFuture, (product, rating) ->
                 new ProductDTO(productId, product, rating))
-            .exceptionally(ex -> {
-                logger.error("An error occurred, details: {}", ex.getMessage());
-                return null;
-            });
+                .exceptionally(AggregatorService::logErrorMessage);
+    }
+
+    public ProductDTO getProductInfoDirect(Integer productId) {
+        try {
+            var product = executorService.submit(() -> Client.getProduct(productId)).get();
+            var rating = executorService.submit(() -> Client.getRatingForProduct(productId)).get();
+            return new ProductDTO(productId, product, rating);
+        } catch (InterruptedException | ExecutionException e) {
+            logErrorMessage(e);
+            return null;
+        }
     }
 }
