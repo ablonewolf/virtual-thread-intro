@@ -11,7 +11,9 @@ public class AggregatorDemo {
 
     private static final Logger logger = LoggerFactory.getLogger(AggregatorDemo.class);
 
+    @SuppressWarnings("unused")
     void main() {
+        var platformThreadFactory = Thread.ofPlatform().name("Platform Thread - ", 1).factory();
         var virtualThreadFactory = Thread.ofVirtual().name("Virtual Thread - ", 1).factory();
         var executorService = Executors.newThreadPerTaskExecutor(virtualThreadFactory);
 
@@ -20,8 +22,7 @@ public class AggregatorDemo {
             AggregatorService aggregatorService = new AggregatorService(executorService);
 
             for (int i = 1; i <= 500000; i++) {
-                final int index = i;
-                executorService.submit(() -> fetchAndPrintProductInfo(index, aggregatorService));
+                fetchAndPrintProductInfo(i, aggregatorService);
             }
 
         }
@@ -41,7 +42,7 @@ public class AggregatorDemo {
         var endTime = System.currentTimeMillis();
         logger.info("Elapsed time: {} ms", endTime - startTime);
 
-        ThreadUtils.sleep(Duration.ofSeconds(5));
+        ThreadUtils.sleep(Duration.ofSeconds(20));
     }
 
     private void fetchAndPrintProductInfo(Integer productId, AggregatorService aggregatorService) {
