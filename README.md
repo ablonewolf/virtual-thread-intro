@@ -32,7 +32,7 @@ src/main/java/org/ablonewolf/
 
 2. **Start the service**:
    ```bash
-   java -jar resources/product-backend.jar --server.port=7070
+   java -jar src/main/resources/product-backend.jar --server.port=7070
    ```
    
    The service will start on **port 7070** and provides the following endpoints:
