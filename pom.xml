@@ -10,7 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <logback.version>1.4.12</logback.version>
+        <logback.version>1.5.13</logback.version>
         <junit.version>5.11.3</junit.version>
         <reactor.version>2023.0.4</reactor.version>
     </properties>
@@ -76,8 +76,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <source>25</source>
+                    <target>25</target>
                     <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>
