@@ -8,7 +8,7 @@ This repository contains practical examples showcasing how Virtual Threads work,
 
 ## Prerequisites
 
-- Java 21 or later
+- Java 25 or later
 - Maven (for dependency management)
 
 ## Project Structure
