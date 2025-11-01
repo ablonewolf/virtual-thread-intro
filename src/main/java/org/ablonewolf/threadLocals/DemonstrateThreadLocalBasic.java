@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
+/**
+ * A basic demonstration of ThreadLocal usage to hold session tokens in a web application context.
+ */
 public class DemonstrateThreadLocalBasic {
 
 	private static final Logger log = LoggerFactory.getLogger(DemonstrateThreadLocalBasic.class);
