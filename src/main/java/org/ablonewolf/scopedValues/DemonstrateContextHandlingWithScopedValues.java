@@ -45,8 +45,14 @@ public class DemonstrateContextHandlingWithScopedValues {
 
     private static void orderService() {
         log.info("orderService: {}", AUTH_TOKENS.get());
-        callProductService();
-        callInventoryService();
+
+        // rebinding tokens for product service and inventory service calls
+        ScopedValue.where(AUTH_TOKENS, "product-service-token")
+                .run(DemonstrateContextHandlingWithScopedValues::callProductService);
+        ScopedValue.where(AUTH_TOKENS, "inventory-service-token")
+                .run(DemonstrateContextHandlingWithScopedValues::callInventoryService);
+
+        log.info("Order service completed with token: {}", AUTH_TOKENS.get());
     }
 
     // This is a client to call product service
