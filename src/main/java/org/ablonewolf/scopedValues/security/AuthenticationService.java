@@ -24,4 +24,12 @@ public class AuthenticationService {
 				.run(runnable);
 
 	}
+
+	public static void runAsAdmin(Runnable runnable) {
+		var securityContext = SecurityContextHolder.getScopedValue()
+				.orElseThrow(() -> new SecurityException("Invalid security context"));
+		var elevatedContext = new SecurityContext(securityContext.userId(), UserRole.ADMIN);
+		ScopedValue.where(SecurityContextHolder.getScopedValue(), elevatedContext)
+				.run(runnable);
+	}
 }

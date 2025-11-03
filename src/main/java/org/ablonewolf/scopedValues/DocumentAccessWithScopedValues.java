@@ -24,8 +24,9 @@ public class DocumentAccessWithScopedValues {
 	private static void documentAccessWorkflow(Integer userId, String password) {
 		AuthenticationService.loginAndExecute(userId, password, () -> {
 			documentController.read();
-			documentController.edit();
-			documentController.delete();
+			// elevate to admin for edit and delete operations
+			AuthenticationService.runAsAdmin(documentController::edit);
+			AuthenticationService.runAsAdmin(documentController::delete);
 		});
 	}
 }
